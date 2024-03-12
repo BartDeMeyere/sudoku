@@ -29,13 +29,6 @@ function CreateCells(){
             div.addClass("cell")
             div.attr("id" , i+"_"+j)
 
-            var inputEl = $("<input>")
-            inputEl.type = "number"
-
-
-            div.append(inputEl)
-
-
             if(i < 3 && j > 2 && j < 6){
 
                 div.css("backgroundColor" , "rgb(203,203,203)")
