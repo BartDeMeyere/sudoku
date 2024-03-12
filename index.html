@@ -53,13 +53,32 @@
         button{
 
             padding: 5px;
-            font-size-adjust: calc();
+            font-size: medium;
         }
 
+        .numbers{
+
+            display: grid;
+            border: 1px solid black;
+            grid-template-rows: repeat(3 , 40px);
+            grid-template-columns: repeat(3 , 40px);
+            width: 120px;
+            height: 120px;
+
+        }
+
+        .numbers div{
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <header>sudoku</header>
+   
+    <header>sudoku solver</header>
     <p></p>
     <div class="controls">
         <div><button id="solve">solve sudoku</button></div>
@@ -68,6 +87,20 @@
     <p></p>
     <div class="container">
         <div class="grid"></div>
+    </div>
+    <p></p>
+    <div class="container">
+        <div class="numbers">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="cell.js"></script>

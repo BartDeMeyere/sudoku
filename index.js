@@ -223,75 +223,6 @@ function solve(){
 }
 
 //event listeners
-
-$("body").on("keydown" , (event) => {
-
-    if(clickedcell){
-
-        var id = clickedcell.attr("id").split("_")
-        var r = parseInt(id[0])
-        var c = parseInt(id[1])
-
-    }
-
-    switch(event.key){
- 
-         case "1": 
-         
-                clickedcell.html("1");
-                GetCell(r,c).value = 1
-                break;
-
-         case "2": 
-         
-                clickedcell.html("2");
-                GetCell(r,c).value = 2
-                break;
-
-        case "3": 
-         
-                clickedcell.html("3");
-                GetCell(r,c).value = 3
-                break;
-        
-        case "4": 
-         
-                clickedcell.html("4");
-                GetCell(r,c).value = 4
-                break;
-        
-        case "5": 
-         
-                clickedcell.html("5");
-                GetCell(r,c).value = 5
-                break;
-        
-        case "6": 
-         
-                clickedcell.html("6");
-                GetCell(r,c).value = 6
-                break;
-        
-        case "7": 
-         
-                clickedcell.html("7");
-                GetCell(r,c).value = 7
-                break;
-        
-        case "8": 
-         
-                clickedcell.html("8");
-                GetCell(r,c).value = 8
-                break;
-        
-        case "9": 
-         
-                clickedcell.html("9");
-                GetCell(r,c).value = 9
-                break;
-    }
-})
-
 $("#solve").on("click" , function(){
 
     $("#clear").prop("disabled" , true)
@@ -319,3 +250,15 @@ $("#clear").on("click" , function(){
 
 })
 
+$(".numbers div").on("click" , function(){
+
+    if(clickedcell){
+
+        var id = clickedcell.attr("id").split("_")
+        var r = parseInt(id[0])
+        var c = parseInt(id[1])
+
+        clickedcell.html($(this).html())
+        GetCell(r,c).value = parseInt($(this).html())
+    }
+})
