@@ -227,6 +227,7 @@ $("#solve").on("click" , function(){
 
     $("#clear").prop("disabled" , true)
     $("#solve").prop("disabled" , true)
+    $(".numbers").css("display" , "none")
     GetPossibilities()
     solve()
 
@@ -247,6 +248,7 @@ $("#clear").on("click" , function(){
 
     $("#clear").prop("disabled" , true)
     $("#solve").prop("disabled" , false)
+    $(".numbers").css("display" , "grid")
 
 })
 
