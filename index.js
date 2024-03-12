@@ -196,7 +196,7 @@ function solve(){
 
             currentcell.value = number 
             currentcell.index = i + 1
-            GetElement(currentcell.row , currentcell.column).html(number.toString())
+            GetElement(currentcell.row , currentcell.column).html(number)
             stack.push(currentcell)
             break;
 
