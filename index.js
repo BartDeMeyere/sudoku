@@ -14,22 +14,7 @@ $(".grid").css("grid-template-rows" , "repeat(" + rows + "," + cellsize + "px)")
 $("#clear").prop("disabled" , true)
 
 CreateCells()
-test()
 
-function test(){
-
-    for(var i = 0 ; i < rows ; i++){
-
-        for(var j = 0 ; j < columns ; j++){
-
-            var inputEl = document.createElement("input")
-            inputEl.type = "text"
-            inputEl.pattern = "[0-9]*"
-            inputEl.inputMode = "numeric"
-            GetElement(i,j).append(inputEl)
-        }
-    }
-}
 function CreateCells(){
 
     for(var i = 0 ; i < rows ; i++){
@@ -43,6 +28,12 @@ function CreateCells(){
             var div = $("<div></div>")
             div.addClass("cell")
             div.attr("id" , i+"_"+j)
+
+            var inputEl = $("<input>")
+            inputEl.type = "number"
+
+
+            div.append(inputEl)
 
 
             if(i < 3 && j > 2 && j < 6){
@@ -212,7 +203,7 @@ function solve(){
 
             currentcell.value = number 
             currentcell.index = i + 1
-            GetElement(currentcell.row , currentcell.column).html(number);
+            GetElement(currentcell.row , currentcell.column).html(number.toString())
             stack.push(currentcell)
             break;
 
