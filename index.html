@@ -13,6 +13,11 @@
             font-family:Arial, Helvetica, sans-serif;
         }
 
+        body{
+
+            overflow: hidden;
+        }
+
         .grid{
 
             border: 2px solid black;
@@ -28,6 +33,7 @@
 
             justify-content: center;
             display: flex;
+            padding: 5px;
         }
 
         .cell{
@@ -56,9 +62,9 @@
             font-size: medium;
         }
 
-        .numbers{
+        .cellpossibilities{
 
-            display: grid;
+            display: none;
             border: 1px solid black;
             grid-template-rows: repeat(3 , 40px);
             grid-template-columns: repeat(3 , 40px);
@@ -67,12 +73,21 @@
 
         }
 
-        .numbers div{
+        .cellpossibilities div{
 
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            color:blue;
+            border:.5px solid lightgrey
+        }           
+
+        footer{
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
         }
     </style>
 </head>
@@ -89,19 +104,12 @@
         <div class="grid"></div>
     </div>
     <p></p>
-    <div class="container">
-        <div class="numbers">
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>5</div>
-            <div>6</div>
-            <div>7</div>
-            <div>8</div>
-            <div>9</div>
-        </div>
-    </div>
+    <footer>
+            <div class="container">
+                <div class="cellpossibilities">
+                </div>
+            </div>
+</footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="cell.js"></script>
     <script src="index.js"></script>

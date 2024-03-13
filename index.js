@@ -53,6 +53,8 @@ function CreateCells(){
 
             div.on("click" , function(){
 
+                $(".cellpossibilities").css("display" , "grid")
+
                 if(clickedcell){
 
                     if(cellcolor === "rgb(203, 203, 203)"){
@@ -72,6 +74,34 @@ function CreateCells(){
                 cellcolor = clickedcell.css("backgroundColor")
 
                 clickedcell.css("backgroundColor" , "rgba(255,255,0,.4)")
+
+
+                $(".cellpossibilities").empty()
+
+                var id = clickedcell.attr("id").split("_")
+                var r = parseInt(id[0])
+                var c = parseInt(id[1])
+        
+                GetCellpossibilites(r,c)
+        
+                var pickedcell = GetCell(r,c)
+
+                for(var i = 0 ; i < pickedcell.possibilities.length ; i++){
+
+                    var ndiv = $("<div></div")
+                    ndiv.html(pickedcell.possibilities[i])
+
+                    ndiv.on("click" , function(){
+
+                        var id = clickedcell.attr("id").split("_")
+                        var r = parseInt(id[0])
+                        var c = parseInt(id[1])
+                        clickedcell.html($(this).html())
+                        GetCell(r,c).value = parseInt($(this).html())
+
+                    })
+                    $(".cellpossibilities").append(ndiv)
+                }
 
             })
 
@@ -227,7 +257,7 @@ $("#solve").on("click" , function(){
 
     $("#clear").prop("disabled" , true)
     $("#solve").prop("disabled" , true)
-    $(".numbers").css("display" , "none")
+    $(".cellpossibilities").css("display" , "none")
     GetPossibilities()
     solve()
 
@@ -248,19 +278,21 @@ $("#clear").on("click" , function(){
 
     $("#clear").prop("disabled" , true)
     $("#solve").prop("disabled" , false)
-    $(".numbers").css("display" , "grid")
+    $(".cellpossibilities").css("display" , "none")
 
 })
 
-$(".numbers div").on("click" , function(){
+function GetCellpossibilites(row , column){
 
-    if(clickedcell){
+    var current = GetCell(row , column)
 
-        var id = clickedcell.attr("id").split("_")
-        var r = parseInt(id[0])
-        var c = parseInt(id[1])
+    current.possibilities = []
 
-        clickedcell.html($(this).html())
-        GetCell(r,c).value = parseInt($(this).html())
+    for(var n = 1 ; n <= 9 ; n++){
+
+        if(!inRow(current.row , n) && !inColumn(current.column , n) && !inSubgrid(current.row , current.column , n)){
+
+            current.possibilities.push(n)
+        }
     }
-})
+}
