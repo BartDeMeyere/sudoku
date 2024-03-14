@@ -267,6 +267,7 @@ $("#clear").on("click" , function(){
     })
 
     $("#clear").prop("disabled" , true)
+    $("#clearcell").prop("disabled" , false)
     $("#visualize").prop("disabled" , false)
     $("#solve").prop("disabled" , false)
     $(".cellpossibilities").css("display" , "none")
