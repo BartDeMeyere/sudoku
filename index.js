@@ -6,6 +6,8 @@ let clickedcell = undefined
 let cellcolor = undefined
 let stack = []
 let count = 0
+let number = 1
+
 
 $(".grid").css("display" , "grid")
 $(".grid").css("grid-template-columns" , "repeat(" + columns + "," + cellsize + "px)")
@@ -53,7 +55,7 @@ function CreateCells(){
 
             div.on("click" , function(){
 
-                $(".cellpossibilities").css("display" , "grid")
+                $(".cellpossibilities").css("display" , "flex")
 
                 if(clickedcell){
 
@@ -75,7 +77,7 @@ function CreateCells(){
 
                 clickedcell.css("backgroundColor" , "rgba(255,255,0,.4)")
 
-
+                //code for number possibilities clickedcell
                 $(".cellpossibilities").empty()
 
                 var id = clickedcell.attr("id").split("_")
@@ -86,21 +88,26 @@ function CreateCells(){
         
                 var pickedcell = GetCell(r,c)
 
-                for(var i = 0 ; i < pickedcell.possibilities.length ; i++){
+                if(pickedcell.value === 0){
 
-                    var ndiv = $("<div></div")
-                    ndiv.html(pickedcell.possibilities[i])
+                    for(var i = 0 ; i < pickedcell.possibilities.length ; i++){
 
-                    ndiv.on("click" , function(){
+                        var ndiv = $("<div></div")
+                        ndiv.html(pickedcell.possibilities[i])
+    
+                        ndiv.on("click" , function(){
+    
+                            var id = clickedcell.attr("id").split("_")
+                            var r = parseInt(id[0])
+                            var c = parseInt(id[1])
+                            clickedcell.html($(this).html())
+                            GetCell(r,c).value = parseInt($(this).html())
+    
+                        })
+                        
+                        $(".cellpossibilities").append(ndiv)
 
-                        var id = clickedcell.attr("id").split("_")
-                        var r = parseInt(id[0])
-                        var c = parseInt(id[1])
-                        clickedcell.html($(this).html())
-                        GetCell(r,c).value = parseInt($(this).html())
-
-                    })
-                    $(".cellpossibilities").append(ndiv)
+                    }
                 }
 
             })
@@ -174,26 +181,6 @@ function inSubgrid(row , column ,  value){
     return false
 }
 
-function GetPossibilities(){
-
-    cells.forEach(cell => {
-
-        cell.possibilities = []
-    })
-
-    for(var i = 0 ; i < cells.length ; i++){
-
-        for(var n = 1 ; n <= 9 ; n++){
-
-            if(!inRow(cells[i].row , n) && !inColumn(cells[i].column , n) && !inSubgrid(cells[i].row , cells[i].column , n)){
-
-                cells[i].possibilities.push(n)
-            }
-        }
-    }
-
-}
-
 function GetEmptySpot(){
 
     for(var i = 0 ; i < cells.length ; i++){
@@ -205,13 +192,14 @@ function GetEmptySpot(){
     }
 }
 
-function solve(){
+function Visualize(){
 
     var currentcell = GetEmptySpot()
 
     if(!currentcell){
 
         $("#clear").prop("disabled" , false)
+        $("#clearcell").prop("disabled" , true)
 
         //sudoku is solved
         console.log("sudoku solved in " + count + " steps")
@@ -248,18 +236,20 @@ function solve(){
 
     count++
 
-    setTimeout(solve , 5)
+    setTimeout(Visualize , 5)
 
 }
 
 //event listeners
-$("#solve").on("click" , function(){
+$("#visualize").on("click" , function(){
 
     $("#clear").prop("disabled" , true)
+    $("#visualize").prop("disabled" , true)
     $("#solve").prop("disabled" , true)
+    $("#clearcell").prop("disabled" , true)
     $(".cellpossibilities").css("display" , "none")
-    GetPossibilities()
-    solve()
+    GetPossibilitiesGrid()
+    Visualize()
 
 })
 
@@ -277,11 +267,79 @@ $("#clear").on("click" , function(){
     })
 
     $("#clear").prop("disabled" , true)
+    $("#visualize").prop("disabled" , false)
     $("#solve").prop("disabled" , false)
     $(".cellpossibilities").css("display" , "none")
 
 })
 
+$("#solve").on("click" , function(){
+
+    $("#solve").prop("disabled" , true)
+    $("#visualize").prop("disabled" , true)
+    $("#clearcell").prop("disabled" , true)
+    stack = []
+    solve();
+})
+
+$("#clearcell").on("click" , function(){
+
+    clickedcell.html("")
+    clickedcell.css("backgroundColor" , cellcolor)
+    var id = clickedcell.attr("id").split("_")
+    var r = parseInt(id[0])
+    var c = parseInt(id[1])
+    GetCell(r,c).value = 0
+})
+
+function solve(){
+
+    do{
+
+        var current = GetEmptySpot()
+
+        if(!current){
+
+            $("#clear").prop("disabled" , false)
+            $("#clearcell").prop("disabled" , false)
+            console.log("sudoku solved in " + count + " steps")
+            return
+        }
+
+        if(!inRow(current.row , number) && !inColumn(current.column , number) && !inSubgrid(current.row , current.column , number) && number < 10){
+
+            current.value = number
+            GetElement(current.row , current.column).html(number)
+            stack.push(current)
+            number = 0
+    
+        }else{
+    
+            if(number > 8){
+    
+                if(stack.length > 0){
+    
+                    current.value = 0
+                    GetElement(current.row , current.column).html("")
+                    current = stack.pop()
+                    number = current.value
+                    current.value = 0
+        
+                }
+    
+            }  
+      
+        }
+    
+        number++
+
+        count++
+
+    }while(current)
+
+
+}
+    
 function GetCellpossibilites(row , column){
 
     var current = GetCell(row , column)
@@ -295,4 +353,14 @@ function GetCellpossibilites(row , column){
             current.possibilities.push(n)
         }
     }
+}
+
+function GetPossibilitiesGrid(){
+
+    cells.forEach(cell => {
+
+        cell.possibilities = []
+
+        GetCellpossibilites(cell.row , cell.column)
+    })
 }

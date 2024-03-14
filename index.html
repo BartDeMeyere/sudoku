@@ -64,18 +64,16 @@
 
         .cellpossibilities{
 
-            display: none;
-            border: 1px solid black;
-            grid-template-rows: repeat(3 , 40px);
-            grid-template-columns: repeat(3 , 40px);
-            width: 120px;
-            height: 120px;
+            display: flex;
+            flex-direction:row;
 
         }
 
         .cellpossibilities div{
 
             display: flex;
+            width: 30px;
+            height: 30px;
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -96,8 +94,10 @@
     <header>sudoku solver</header>
     <p></p>
     <div class="controls">
-        <div><button id="solve">solve sudoku</button></div>
+        <div><button id="visualize">visualize</button></div>
         <div><button id="clear">clear</button></div>
+        <div><button id="solve">solve</button></div>
+        <div><button id="clearcell">clr</button></div>
     </div>
     <p></p>
     <div class="container">
