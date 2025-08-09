@@ -29,5 +29,5 @@ Een webgebaseerde Sudoku-oplosser geschreven in JavaScript. Vul handmatig een Su
 1. Clone de repository:
 
 ```bash
-git clone https://github.com/jouwgebruikersnaam/sudoku.git
+git clone https://github.com/BartDeMeyere/sudoku.git
 cd sudoku
