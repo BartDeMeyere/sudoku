@@ -8,7 +8,7 @@ Een webgebaseerde Sudoku-oplosser geschreven in JavaScript. Vul handmatig een Su
 
 ## 🚀 Demo
 
-👉 Bekijk het project live: https://github.com/BartDeMeyere/sudoku
+👉 Bekijk het project live: https://bartdemeyere.github.io/sudoku/
 👉 Of clone het lokaal (zie onder)
 
 ---
